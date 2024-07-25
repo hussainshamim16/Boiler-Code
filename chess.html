@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+#chessboard {
+    display: grid;
+    grid-template-columns: repeat(8, 50px);
+    grid-template-rows: repeat(8, 50px);
+    gap: 0;
+    /* border: 2px solid #333333; */
+}
+
+.square {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.black {
+    background-color: rgba(139, 0, 0, 0.507);
+}
+
+.white {
+    background-color: #000000;
+}
+
+.piece {
+    font-size: 36px;
+    cursor: grab;
+    user-select: none;
+}
+
+.P::before { content: '♙'; color: white;}
+.R::before { content: '♖'; color: white;}
+.N::before { content: '♘'; color: white;}
+.B::before { content: '♗'; color: white;}
+.Q::before { content: '♕'; color: white;}
+.K::before { content: '♔'; color: white;}
+.p::before { content: '♟'; color: white;}
+.r::before { content: '♜'; color: white;}
+.n::before { content: '♞'; color: white;}
+.b::before { content: '♝'; color: white;}
+.q::before { content: '♛'; color: white;}
+.k::before { content: '♚'; color: white;}
+
+</style>
+<body>
+    <div id="chessboard"></div>
+    
+
+
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const chessboard = document.getElementById('chessboard');
+    const squares = [];
+    let draggedPiece = null;
+    let targetSquare = null;
+
+    for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 8; col++) {
+            const square = document.createElement('div');
+            square.classList.add('square');
+            square.classList.add((row + col) % 2 === 0 ? 'white' : 'black');
+            square.dataset.row = row;
+            square.dataset.col = col;
+            square.addEventListener('dragover', (e) => e.preventDefault());
+            square.addEventListener('drop', handleDrop);
+            chessboard.appendChild(square);
+            squares.push(square);
+        }
+    }
+
+    function initializePieces() {
+        const initialPositions = [
+            'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r',
+            'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p',
+            '', '', '', '', '', '', '', '',
+            '', '', '', '', '', '', '', '',
+            '', '', '', '', '', '', '', '',
+            '', '', '', '', '', '', '', '',
+            'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P',
+            'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'
+        ];
+
+        initialPositions.forEach((piece, index) => {
+            if (piece) {
+                const pieceElement = document.createElement('span');
+                pieceElement.classList.add('piece', piece);
+                pieceElement.setAttribute('draggable', true);
+                pieceElement.addEventListener('dragstart', handleDragStart);
+                pieceElement.addEventListener('dragend', handleDragEnd);
+                squares[index].appendChild(pieceElement);
+            }
+        });
+    }
+
+    function handleDragStart(e) {
+        draggedPiece = e.target;
+        setTimeout(() => (draggedPiece.style.display = 'none'), 0);
+    }
+
+    function handleDragEnd(e) {
+        setTimeout(() => {
+            draggedPiece.style.display = 'block';
+            draggedPiece = null;
+        }, 0);
+    }
+
+    function handleDrop(e) {
+        targetSquare = e.target.closest('.square');
+        if (targetSquare && draggedPiece) {
+            // Remove any existing piece in the target square
+            if (targetSquare.firstChild) {
+                targetSquare.firstChild.remove();
+                checkGameOver();
+            }
+            targetSquare.appendChild(draggedPiece);
+        }
+    }
+
+    function checkGameOver() {
+        const pieces = document.querySelectorAll('.piece');
+        const whitePieces = Array.from(pieces).filter(piece => piece.classList.contains('P') || piece.classList.contains('R') || piece.classList.contains('N') || piece.classList.contains('B') || piece.classList.contains('Q') || piece.classList.contains('K'));
+        const blackPieces = Array.from(pieces).filter(piece => piece.classList.contains('p') || piece.classList.contains('r') || piece.classList.contains('n') || piece.classList.contains('b') || piece.classList.contains('q') || piece.classList.contains('k'));
+
+        if (whitePieces.length === 0 || blackPieces.length === 0) {
+            document.getElementById('gameover').classList.remove('hidden');
+        }
+    }
+
+    initializePieces();
+});
+
+    </script>
+</body>
+</html>
