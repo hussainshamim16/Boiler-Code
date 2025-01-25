@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux' // read and update karney key liye 
 import { decrement, increment } from '../Store/counter/counterSlice' // store key functions
+import About from './About'
 
-const Home = () => {
+const Home =  ()=> {
     const count = useSelector((state) => state.counter.value)
     const dispatch = useDispatch()
+    const name = "Arzoo";
+
     const greating = (e) => {
         alert(`${e} Hussain`)
     }
