@@ -6,6 +6,7 @@ import userRoutes from './routes/user.routes.js'
 import Beneficiary from './routes/beneficiary.routes.js'
 import Admin from './routes/Admin.routes.js'
 import Department from './routes/department.routes.js'
+import cors from 'cors';
 
 const app = express();
 const port = process.env.PORT;
@@ -29,7 +30,7 @@ app.use('/api/', Department);
 
 connectDB()
   .then(() => {
-    app.listen(process.env.PORT, () => {
+    app.listen( process.env.PORT || 3000, () => {
       console.log(`⚙️  Server is running at port : ${process.env.PORT}`);
     });
   })

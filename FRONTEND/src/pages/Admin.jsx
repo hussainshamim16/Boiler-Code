@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 const Admin = () => {
+   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log({ email, password });
+
+    if (email == "admin@gmail.com" && password == "admin") {
+      alert("Admin Login Successful!")
+      localStorage.setItem('admin',true)
+      navigate("/dashboard");
+    } else {
+      alert("Admin Login Failed!")
+    }
   };
 
   return (

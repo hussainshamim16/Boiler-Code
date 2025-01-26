@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import Beneficiary from "../models/Beneficiary.js";
 import jwt from "jsonwebtoken";
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Function to generate JWT token
 const generateAccessToken = (beneficiary) => {
@@ -20,7 +22,7 @@ const addBeneficiary = async (req, res) => {
     const { cnic, name, phone, address, purpose, status, remarks } = req.body;
 
     // Validate input fields
-    if (!cnic || !name || !phone || !address || !purpose || !status || !remarks) {
+    if (!cnic || !name || !phone || !address || !purpose) {
         return res.status(400).json({ message: "Please fill in all the required fields" });
     }
 
