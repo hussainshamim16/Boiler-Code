@@ -1,0 +1,84 @@
+Beneficiary ka CNIC, naam, phone number, aur address collect karna.
+Data ko database me save karna.
+Token generate karna:
+Token ko unique ID ke sath beneficiary aur department se link karna.
+Print karna ya SMS ke zariye send karna.
+
+
+Core Features (App ki khasiyat):
+1. User Management:
+Role-Based Access:
+Admin: Full permissions.
+Receptionist: Registration aur token assignment tak limited access.
+Department Staff: Status view aur update karne tak limited access.
+Admin users ko add/edit/delete kar sakta hai aur roles assign kar sakta hai.
+2. Token System:
+Unique Token Generation: Har token unique hota hai aur beneficiary ke request aur department se linked hota hai.
+Token Scanning: Staff token scan karke instantly beneficiary ke details dekh sakta hai.
+3. Dashboard:
+Metrics:
+Daily visitor count.
+New vs. returning beneficiaries.
+Department-wise activity.
+Visualizations:
+Bar charts daily activity ke liye.
+Pie charts department contributions ke liye.
+4. Search Functionality:
+CNIC, phone number, aur name ke zariye search karna.
+Instant results with precise data.
+5. History Tracking:
+Comprehensive Logs:
+Har interaction timestamp ke saath record hoti hai.
+Purpose, visited departments aur status ka detail.
+Easy Access: Audit aur reporting ke liye searchable history.
+
+
+
+
+backend/
+├── config/                # Configuration files
+│   ├── db.js             # Database connection
+│   ├── jwtConfig.js      # JWT secret key & settings
+│   ├── dotenvConfig.js   # Environment variables config
+├── controllers/           # Application logic
+│   ├── AuthController.js
+│   ├── UserController.js
+│   ├── TokenController.js
+│   ├── BeneficiaryController.js
+│   ├── DashboardController.js
+│   ├── ReportController.js
+├── middleware/            # Middleware for request handling
+│   ├── authMiddleware.js
+│   ├── errorHandler.js
+│   ├── roleMiddleware.js
+├── models/                # Database schemas/models
+│   ├── User.js
+│   ├── Token.js
+│   ├── Beneficiary.js
+│   ├── Report.js
+├── routes/                # API routes
+│   ├── authRoutes.js
+│   ├── userRoutes.js
+│   ├── tokenRoutes.js
+│   ├── beneficiaryRoutes.js
+│   ├── dashboardRoutes.js
+│   ├── reportRoutes.js
+├── services/              # Business logic/services
+│   ├── AuthService.js
+│   ├── TokenService.js
+│   ├── BeneficiaryService.js
+│   ├── ReportService.js
+├── utils/                 # Utility functions/helpers
+│   ├── generateToken.js
+│   ├── validation.js
+│   ├── logger.js
+├── validations/           # Request validations
+│   ├── authValidation.js
+│   ├── userValidation.js
+│   ├── tokenValidation.js
+│   ├── beneficiaryValidation.js
+├── .env                   # Environment variables
+├── .gitignore             # Git ignore file
+├── package.json           # Dependencies and scripts
+├── server.js              # Application entry point
+└── README.md              # Project documentation
